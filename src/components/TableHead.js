@@ -6,6 +6,7 @@ import TableHeadRow from './TableHeadRow';
 import TableHeadCell from './TableHeadCell';
 import TableSelectCell from './TableSelectCell';
 import { withStyles } from '@material-ui/core/styles';
+import TableHeadCellWithFilter from './TableHeadCellWithFilter';
 
 const defaultHeadStyles = theme => ({
   main: {},
@@ -30,7 +31,7 @@ class TableHead extends React.Component {
   };
 
   render() {
-    const { classes, columns, count, options, data, page, setCellRef, selectedRows } = this.props;
+    const { classes, columns, count, options, filterList, setCellRef, selectedRows, filterUpdate } = this.props;
 
     const numSelected = (selectedRows && selectedRows.data.length) || 0;
     const isDeterminate = numSelected > 0 && numSelected < count;
@@ -58,7 +59,7 @@ class TableHead extends React.Component {
               (column.customHeadRender ? (
                 column.customHeadRender({ index, ...column }, this.handleToggleColumn)
               ) : (
-                <TableHeadCell
+                <TableHeadCellWithFilter
                   key={index}
                   index={index}
                   type={'cell'}
@@ -67,9 +68,11 @@ class TableHead extends React.Component {
                   sortDirection={column.sortDirection}
                   toggleSort={this.handleToggleColumn}
                   hint={column.hint}
+                  filterValue={filterList[index].toString() || ''}
+                  onFilterUpdate={filterUpdate}
                   options={options}>
                   {column.name}
-                </TableHeadCell>
+                </TableHeadCellWithFilter>
               )),
           )}
         </TableHeadRow>

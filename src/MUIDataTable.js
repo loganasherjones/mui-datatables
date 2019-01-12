@@ -983,6 +983,8 @@ class MUIDataTable extends React.Component {
               toggleSort={this.toggleSortColumn}
               setCellRef={this.setHeadCellRef}
               options={this.options}
+              filterList={filterList}
+              filterUpdate={this.filterUpdate}
             />
             <TableBody
               data={displayData}
